@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+lib = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require 'marina'
+
+hosts_file_path = ARGV[0] || '/etc/hosts'
+hostspec_file_path = ARGV[1] || './Hostspec'
+marina = Marina.new(hosts_file_path, hostspec_file_path)
+
+begin
+  hosts_spec = File.open(marina.hostspec_file_path, 'r')
+  marina.instance_eval(hosts_spec.read)
+  marina.add_to_hostfile
+rescue IOError
+  puts e; raise e
+rescue Errno::ENOENT
+  puts "marina: #{marina.hostspec_file_path}: No such file"
+  exit(66)
+ensure
+  hosts_spec.close if hosts_spec.respond_to?(:close)
+end
