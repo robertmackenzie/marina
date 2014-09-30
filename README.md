@@ -1,3 +1,5 @@
+[![Build Status](https://drone.io/github.com/robertmackenzie/marina/status.png)](https://drone.io/github.com/robertmackenzie/marina/latest)
+
 # Marina
 
 Encourages you to declare any hosts file entries you need alongside your project in a Hostspec file. You can then use this tool to update your hosts file against your Hostspec file. Similar style to gems with bundler.
